@@ -1,9 +1,21 @@
-import type { Config } from "tailwindcss";
 
-const config: Config = {
+import type { Config } from "tailwindcss";
+const typeof config: config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
+
+
+
+
     extend: {
+      screens: {
+        xs: "480px",
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
+      },
       colors: {
         // Brand colors
         primary: "#0E79B2",
@@ -12,8 +24,7 @@ const config: Config = {
         secondary: "#F7B32B",
         onSecondary: "#1e1e1e",
 
-        accent: "#FF3C38",
-        onAccent: "#ffffff",
+
 
         // Backgrounds
         background: "#F1F5F9",
@@ -23,6 +34,7 @@ const config: Config = {
         // Text colors
         text: "#1E293B",
         subtle: "#475569",
+        heading: "#111827",
 
         // Border colors
         border: "#E2E8F0",
