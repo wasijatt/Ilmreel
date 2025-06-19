@@ -60,8 +60,7 @@ const MainSidebar = () => {
       {/* Mobile Menu Button */}
       <button
         onClick={() => dispatch(toggleSidebar())}
-        className="fixed top-4 left-4 z-sidebar p-2 rounded-button bg-primary-600 text-primary-600 md:hidden
-          transition-all duration-button ease-button hover:bg-primary-700"
+        className="fixed top-4 left-4 z-50 p-2 rounded-button bg-primary-600 text-white md:hidden transition-all duration-button ease-button"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -75,9 +74,9 @@ const MainSidebar = () => {
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         
-        <Image src="/IlmReel Logo.jpg" alt="logo" width={200} height={200}  className='bg-transparent  rounded-3xl w-24 h-24' />
+        <Image src="/IlmReel Logo.jpg" alt="logo" width={200} height={200}  className='hidden md:block  bg-transparent  rounded-3xl w-24 h-24' />
 
-        <div className="space-y-2 w-full mb-8">
+        <div className="space-y-2   w-full mb-8">
           {sidebarItems.map((item) => (
             <SidebarItem
               key={item.label}
@@ -95,8 +94,8 @@ const MainSidebar = () => {
         {user ? (
           <button
             onClick={signOut}
-            className="w-full py-3 bg-error text-white rounded-button font-medium mb-8
-              transition-all duration-button ease-button hover:bg-error/90"
+            className="w-full py-3 bg-primary-600  text-white rounded-button font-medium mb-8
+              transition-all duration-button ease-button"
           >
             Sign Out
           </button>
