@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import AuthModal from "@/app/auth/AuthModal";
-import ProfileTabsNav from "./ProfileTabsNav";
-import ProfileInfo from "./ProfileInfo";
+// import ProfileTabsNav from "./ProfileTabsNav";
+// import ProfileInfo from "./ProfileInfo";
 import ProfileEditModal from "@/app/Component/modals/ProfileEditModal";
 import VideoUpload from "./VideoUpload";
-import { Heart, Video ,BookHeart ,  Settings, Share } from "lucide-react";
+import { Heart, Video, BookHeart, Share2, Settings } from "lucide-react";
 import AvatarInput from "@/app/Component/ui/AvatarInput";
-
+import ShareProfileModal from "@/app/Component/modals/ShareProfileModal";
 /**
  * Main Profile Tab component.
  * Handles authentication, tab navigation, and renders the correct profile section.
@@ -20,7 +20,7 @@ const ProfileTab = () => {
   const { user } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(!user);
   const [showEditProfile, setShowEditProfile] = useState(false);
-
+  const [showShareModal, setShowShareModal] = useState(false);
   // Mock user data - replace with real user data
   const userData = {
     username: user?.username || "muhammad.wasim508",
@@ -42,9 +42,9 @@ const ProfileTab = () => {
   }, [userData.avatar]);
 
   const tabs = [
-    { id: "videos", label: "Videos", icon: <Video/> },
+    { id: "videos", label: "Videos", icon: <Video /> },
     { id: "favorites", label: "Favorites", icon: <BookHeart /> },
-    { id: "liked", label: "Liked", icon: <Heart/> }
+    { id: "liked", label: "Liked", icon: <Heart /> }
   ];
 
   const sortOptions = [
@@ -56,9 +56,9 @@ const ProfileTab = () => {
   // If not signed in, show the AuthModal
   if (!user) {
     return (
-      <AuthModal 
-        isOpen={showAuthModal} 
-        onClose={() => setShowAuthModal(false)} 
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
       />
     );
   }
@@ -107,15 +107,18 @@ const ProfileTab = () => {
                 <div className="flex justify-center md:justify-start gap-3">
                   <button
                     onClick={() => setShowEditProfile(true)}
-                    className="px-6 py-2 bg-primary-600 hover:bg-primary-700  font-semibold rounded-md transition-colors"
+                    className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white  font-semibold rounded-md transition-colors"
                   >
                     Edit profile
                   </button>
                   <button className="p-2 hover:bg-gray-800 hover:text-white rounded-md transition-colors">
                     <Settings className="w-5 h-5" />
                   </button>
-                  <button className="p-2 rotate-90 hover:bg-gray-800 hover:text-white rounded-md transition-colors">
-                    <Share className="w-5 h-5" />
+                  <button
+                    onClick={() => setShowShareModal(true)}
+                    className="p-2  hover:bg-gray-800 hover:text-white rounded-md transition-colors"
+                  >
+                    <Share2 className="w-5 h-5" />
                   </button>
                 </div>
               </div>
@@ -152,11 +155,10 @@ const ProfileTab = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-3 font-medium transition-colors relative ${
-                    activeTab === tab.id
+                  className={`flex items-center gap-2 px-4 py-3 font-medium transition-colors relative ${activeTab === tab.id
                       ? "text-primary-600"
                       : "text-primary-700 "
-                  }`}
+                    }`}
                 >
                   <span className="text-sm">{tab.icon}</span>
                   <span className="hidden sm:inline">{tab.label}</span>
@@ -173,11 +175,10 @@ const ProfileTab = () => {
                 <button
                   key={option.id}
                   onClick={() => setSortBy(option.id)}
-                  className={`px-3 py-1 text-sm font-medium transition-colors ${
-                    sortBy === option.id
-                      ? "bg-gray-700 text-white"
+                  className={`px-3 py-1 text-sm font-medium transition-colors ${sortBy === option.id
+                      ? "bg-primary-700 text-white"
                       : "text-gray-400 hover:text-gray-200"
-                  }`}
+                    }`}
                 >
                   {option.label}
                 </button>
@@ -190,15 +191,15 @@ const ProfileTab = () => {
         <div className="px-4 py-8 md:px-6">
           {activeTab === "videos" && !userData.hasVideos && (
             <div className="text-center py-16">
-             
-                <VideoUpload/>
-              
+
+              <VideoUpload />
+
             </div>
           )}
 
           {activeTab === "videos" && userData.hasVideos && (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-           <Profile/>
+              <Profile />
             </div>
           )}
 
@@ -221,6 +222,17 @@ const ProfileTab = () => {
               <p className="text-gray-400">Videos you like will appear here</p>
             </div>
           )}
+
+
+
+          {showShareModal && (
+            <ShareProfileModal
+              isOpen={showShareModal}
+              onClose={() => setShowShareModal(false)}
+              userProfile={userData}
+            />
+          )}
+
         </div>
       </div>
     </div>

@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { X } from 'lucide-react';
+import Image from 'next/image';
+import { supabase } from '@/config/supabase';
 
 const AuthModal = ({ isOpen, onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,10 +13,20 @@ const AuthModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isLogin) {
-      await signIn(email, password);
-    } else {
-      await signUp(email, password);
+    console.log('AuthModal: Form submitted', { isLogin, email });
+    
+    try {
+      if (isLogin) {
+        console.log('AuthModal: Attempting sign in...');
+        await signIn(email, password);
+        console.log('AuthModal: Sign in completed');
+      } else {
+        console.log('AuthModal: Attempting sign up...');
+        await signUp(email, password);
+        console.log('AuthModal: Sign up completed');
+      }
+    } catch (error) {
+      console.error('AuthModal: Error in handleSubmit:', error);
     }
   };
 
@@ -29,12 +41,13 @@ const AuthModal = ({ isOpen, onClose }) => {
         >
           <X size={24} />
         </button>
-     
-
+        <div className='flex   flex-col items-center'>
+          <Image src="/IlmReel-logo.png" width={200} height={200} quality={75} alt='ILMREEL logo' className='w-32' />
+        </div>
         <h2 className="text-2xl font-bold text-white mb-6 text-center">
-        {isLogin ? 'Welcome Back' : 'Create Account'}
+          {isLogin ? 'Welcome Back' : 'Create Account'}
 
-          
+
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -72,8 +85,8 @@ const AuthModal = ({ isOpen, onClose }) => {
             {isLoading
               ? 'Loading...'
               : isLogin
-              ? 'Sign In'
-              : 'Sign Up'}
+                ? 'Sign In'
+                : 'Sign Up'}
           </button>
         </form>
 

@@ -3,13 +3,14 @@ import sidebarReducer from './slices/sidebarSlice';
 import authReducer from './slices/authSlice';
 import videoUploadReducer from './slices/videoUploadSlice';
 import profileReducer from './slices/profileSlice';
-
+import forYouReducer from './slices/forYouSlice'
 export const store = configureStore({
   reducer: {
     sidebar: sidebarReducer,
     auth: authReducer,
     videoUpload: videoUploadReducer,
     profile: profileReducer,
+    forYou:forYouReducer
   },
 }); 
 

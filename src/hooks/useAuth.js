@@ -29,16 +29,29 @@ export const useAuth = () => {
   const signIn = async (email, password) => {
     try {
       dispatch(setLoading(true));
-      const { error } = await supabase.auth.signInWithPassword({
+      console.log('Attempting to sign in with email:', email);
+      
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase sign in error:', error);
+        throw error;
+      }
+      
+      console.log('Sign in successful:', data);
       toast.success('Successfully signed in!');
     } catch (error) {
+      console.error('Sign in error details:', {
+        message: error.message,
+        status: error.status,
+        statusText: error.statusText,
+        name: error.name
+      });
       dispatch(setError(error.message));
-      toast.error(error.message);
+      toast.error(error.message || 'Failed to sign in. Please try again.');
     } finally {
       dispatch(setLoading(false));
     }
@@ -47,16 +60,29 @@ export const useAuth = () => {
   const signUp = async (email, password) => {
     try {
       dispatch(setLoading(true));
-      const { error } = await supabase.auth.signUp({
+      console.log('Attempting to sign up with email:', email);
+      
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase sign up error:', error);
+        throw error;
+      }
+      
+      console.log('Sign up successful:', data);
       toast.success('Successfully signed up! Please check your email for verification.');
     } catch (error) {
+      console.error('Sign up error details:', {
+        message: error.message,
+        status: error.status,
+        statusText: error.statusText,
+        name: error.name
+      });
       dispatch(setError(error.message));
-      toast.error(error.message);
+      toast.error(error.message || 'Failed to sign up. Please try again.');
     } finally {
       dispatch(setLoading(false));
     }

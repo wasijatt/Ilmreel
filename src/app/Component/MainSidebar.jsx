@@ -74,7 +74,7 @@ const MainSidebar = () => {
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         
-        <Image src="/IlmReel Logo.jpg" alt="logo" width={200} height={200}  className='hidden md:block  bg-transparent  rounded-3xl w-24 h-24' />
+        <Image src="/IlmReel-logo.png" alt="logo" width={200} height={200}  className='hidden md:block  bg-transparent  rounded-3xl w-24' />
 
         <div className="space-y-2   w-full mb-8">
           {sidebarItems.map((item) => (

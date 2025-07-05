@@ -5,7 +5,8 @@ import { useEffect } from "react"
 import ProfileTab from "./Component/profile/ProfileTab"
 import { fetchProfile } from "@/store/slices/profileSlice"
 import { useAuth } from "@/hooks/useAuth"
-
+import VideoFeed from "./Component/foryou/VideoFeed"
+// import EnvTest from "./Component/EnvTest"
 const MainSidebar = dynamic(() => import("./Component/MainSidebar"), {
   ssr: true
 })
@@ -20,6 +21,7 @@ export default function Page() {
   const activeTab = useSelector((state) => state.sidebar.activeItem)
   const { user } = useAuth()
   const dispatch = useDispatch()
+  const { videos, loading, error } = useSelector((state) => state.forYou)
 
   // Fetch profile data globally when user logs in
   useEffect(() => {
@@ -32,6 +34,11 @@ export default function Page() {
     <div className="flex min-h-screen bg-background-light">
       <MainSidebar />
       <main className="flex-1 p-4">
+        {/* Temporary debug component - remove after fixing the issue */}
+        <div className="mb-4">
+          {/* <EnvTest /> */}
+        </div>
+        {activeTab === "For You" && <VideoFeed />}
         {activeTab === "Profile" && <ProfileTab />}
         {/* Add more tab/page renders here as your app grows */}
       </main>
